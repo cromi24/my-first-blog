@@ -3,20 +3,24 @@
         <title>Ilyha's blog</title>
     </head>
     <body>
-        <<div>
+        <div>
             <h1><a href="/">Django-learning Blog</a></h1>
         </div>
 
         <div>
             <p>published: 07.05.2022, 3.35</p>
             <h2><a href="">My first post</a></h2>
-            <p>Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-        </div>
-
-        <div>
-            <p>published: 07.05.2022, 3.36</p>
-            <h2><a href="">My second post</a></h2>
-            <p>Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut f.</p>
+            <p>Just made this site site on django. Right now its kinda blank, but im working on it.</p>
+            </div>
+            <br>
+            <div>
+            {% for post in posts %}
+                <div>
+                <p>published: {{ post.published_date }}</p>
+                <h1><a href="">{{ post.title }}</a></h1>
+                <p>{{ post.text|linebreaksbr }}</p>
+                </div>
+            {% endfor %}
         </div>
     </body>
 </html>
