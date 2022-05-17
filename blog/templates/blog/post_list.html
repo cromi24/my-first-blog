@@ -1,26 +1,13 @@
-<html>
-     <head>
-        <title>Ilyha's blog</title>
-    </head>
-    <body>
-        <div>
-            <h1><a href="/">Django-learning Blog</a></h1>
-        </div>
+{% extends 'blog\base.html' %}
 
-        <div>
-            <p>published: 07.05.2022, 3.35</p>
-            <h2><a href="">My first post</a></h2>
-            <p>Just made this site site on django. Right now its kinda blank, but im working on it.</p>
+{% block content %}
+    {% for post in posts %}
+     <div class="post">
+            <div class="date">
+                {{ post.published_date }}
             </div>
-            <br>
-            <div>
-            {% for post in posts %}
-                <div>
-                <p>published: {{ post.published_date }}</p>
-                <h1><a href="">{{ post.title }}</a></h1>
-                <p>{{ post.text|linebreaksbr }}</p>
-                </div>
-            {% endfor %}
+            <h1><a href="">{{ post.title }}</a></h1>
+            <p>{{ post.text|linebreaksbr }}</p>
         </div>
-    </body>
-</html>
+    {% endfor %}
+{% endblock %}
