@@ -10,6 +10,10 @@ class Post(models.Model):
     created_date = models.DateTimeField(default=timezone.now)
     published_date = models.DateTimeField(blank=True, null=True)
 
+    @property
+    def url(self):
+        return '/post/{}/'.format(self.pk)
+
     def publish(self):
         self.published_date = timezone.now()
         self.save()

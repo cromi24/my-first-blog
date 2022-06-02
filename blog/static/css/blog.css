@@ -43,3 +43,13 @@ h1, h2, h3, h4 {
 .post h1 a, .post h1 a:visited {
     color: #000000;
 }
+
+.random-posts {
+  margin: 20px 0px;
+}
+.random-posts__title {
+  font-size: 22px;
+  font-weight: 600;
+
+  margin-bottom: 10px;
+}

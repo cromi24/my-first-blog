@@ -10,4 +10,35 @@
             <p>{{ post.text|linebreaksbr }}</p>
         </div>
     {% endfor %}
+
+    <div class="random-posts">
+      <div class="random-posts__title">
+        3 случайные записи:
+      </div>
+      <div id="random-posts" class="random-posts__c"></div>
+    </div>
+
+    <script>
+      fetch('/example-api/posts/?type=random')
+        .then(response => response.json())
+        .then(response => {
+          console.log('response')
+          console.log(response)
+
+          let body = '<ul>'
+
+          response.data.forEach((el) => {
+            body += `
+              <li>
+                <a href='${el.url}'>${el.title}</a>
+              </li>
+            `
+          })
+
+          body += '</ul>'
+
+          document.getElementById('random-posts').innerHTML = body
+
+        })
+    </script>
 {% endblock %}
