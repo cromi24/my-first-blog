@@ -14,10 +14,11 @@
 
 .top-menu, .top-menu a, .top-menu li, .top-menu:hover, .top-menu:visited {
     color: #ffffff;
-    list-style: none;
     font-size: 26pt;
-    margin: auto;
     display: inline-block;
+    padding-right: 10px;
+    margin: auto;
+    margin-right: 10px;
 }
 
 .content {
