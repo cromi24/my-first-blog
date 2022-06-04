@@ -1,14 +1,25 @@
+
 .pageHeader{
     background-color: #ff9400;
     margin-top: 0;
-    margin-bottom: 20;
+    margin-bottom: 30;
     padding: 20px 20px 20px 40px;
+    display: flex;
 }
-.pageHeader h1, .pageHeader h1 a, .pageHeader h1 a:visited, .pageHeader h1 a:active {
+.pageHeader h1, .pageHeader h1 a, .pageHeader h1 a:visited, .pageHeader h1 a:active{
     color: #ffffff;
     font-size: 36pt;
     text-decoration: none;
 }
+
+.top-menu, .top-menu a, .top-menu li, .top-menu:hover, .top-menu:visited {
+    color: #ffffff;
+    list-style: none;
+    font-size: 26pt;
+    margin: auto;
+    display: inline-block;
+}
+
 .content {
     margin-left: 40px;
 }
@@ -22,18 +33,12 @@ h1, h2, h3, h4 {
 }
 
 .save {
-    float: right;
+    display: flex;
+    justify-content: center;
 }
 
 .post-form textarea, .post-form input {
     width: 100%;
-}
-
-.top-menu, .top-menu:hover, .top-menu:visited {
-    color: #ffffff;
-    float: left;
-    font-size: 26pt;
-    margin-right: 20px;
 }
 
 .post {
@@ -50,6 +55,10 @@ h1, h2, h3, h4 {
 .random-posts__title {
   font-size: 22px;
   font-weight: 600;
-
   margin-bottom: 10px;
+}
+
+.content p{
+    font-size: 18px;
+    font-family: verdana;
 }
