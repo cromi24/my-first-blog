@@ -1,2 +1,4 @@
 Django~=3.2.10
 djangorestframework~=3.13.1
+django-user-accounts~=2.0.3
+python-dotenv~=0.20.0

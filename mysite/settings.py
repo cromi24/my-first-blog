@@ -1,17 +1,39 @@
 import os
 from pathlib import Path
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+DEFAULT_FROM_EMAIL = 'cromi24@yandex.ru'
+EMAIL_HOST = "smtp.yandex.ru"
+EMAIL_HOST_USER = "cromi24@yandex.ru"
+EMAIL_HOST_PASSWORD = os.environ.get('emailPass')
+smtpAuthentication="Basic"
+EMAIL_PORT = 465
+EMAIL_USE_TLS = False
+EMAIL_USE_SSL = True
+
+SITE_ID = 2
+
+ACCOUNT_EMAIL_UNIQUE = True
+ACCOUNT_EMAIL_CONFIRMATION_REQUIRED = True
+
+
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
+ACCOUNT_LOGIN_URL = 'blog/templates/registration:login'
+#ACCOUNT_LOGIN_URL = 'account:login'
+ACCOUNT_EMAIL_CONFIRMATION_ANONYMOUS_REDIRECT_URL = ACCOUNT_LOGIN_URL
+ACCOUNT_PASSWORD_RESET_REDIRECT_URL = ACCOUNT_LOGIN_URL
+ACCOUNT_EMAIL_CONFIRMATION_URL = "account:account_confirm_email"
+ACCOUNT_SETTINGS_REDIRECT_URL = 'account:account_settings'
+#ACCOUNT_PASSWORD_CHANGE_REDIRECT_URL = "blog/templates/registration:password_reset_confirm"
+ACCOUNT_PASSWORD_CHANGE_REDIRECT_URL = "account:account_password"
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-ges40rq5i$^#i0(9n7oh53vfly)1u*6-p52#b78%imb9v80*p5'
+SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -30,7 +52,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'blog',
-    'accounts.apps.AccountsConfig'
+    'accounts.apps.AccountsConfig',
+    'django.contrib.sites',
+    'account',
 ]
 
 MIDDLEWARE = [
@@ -41,6 +65,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'account.middleware.LocaleMiddleware',
+    'account.middleware.TimezoneMiddleware',
 ]
 
 ROOT_URLCONF = 'mysite.urls'
@@ -56,6 +82,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'account.context_processors.account',
             ],
         },
     },
@@ -129,5 +156,4 @@ REST_FRAMEWORK = {
     'PAGE_SIZE': 10
 }
 
-########DELETE IN PRODUCTION
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
