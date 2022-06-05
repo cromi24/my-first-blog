@@ -8,7 +8,7 @@ from django.shortcuts import redirect
 from django.core.mail import BadHeaderError, send_mail
 from django.http import HttpResponse, HttpResponseRedirect
 
-def passReset_email(request):
+'''def passReset_email(request):
     subject = request.POST.get('subject', 'Password reset on cromi24 blog')
     message = request.POST.get('message', 'templates/registration/password_reset_email.html')
     from_email = request.POST.get('from_email', '')
@@ -19,7 +19,7 @@ def passReset_email(request):
             return HttpResponse('Invalid header found.')
         return HttpResponseRedirect('/templates/registration/password_reset_done.html')
     else:
-        return HttpResponse('Make sure all fields are entered and valid.')
+        return HttpResponse('Make sure all fields are entered and valid.')'''
 
 def post_list(request):
     posts=Post.objects.filter(published_date__lte=timezone.now()).order_by('published_date')
