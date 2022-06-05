@@ -10,13 +10,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 DEFAULT_FROM_EMAIL = 'cromi24@yandex.ru'
 EMAIL_HOST = "smtp.yandex.ru"
 EMAIL_HOST_USER = "cromi24@yandex.ru"
-EMAIL_HOST_PASSWORD = os.environ.get('emailPass')
+EMAIL_HOST_PASSWORD = os.getenv('emailPass')
 smtpAuthentication="Basic"
 EMAIL_PORT = 465
 EMAIL_USE_TLS = False
 EMAIL_USE_SSL = True
 
-SITE_ID = 4
+SITE_ID = 3
 
 ACCOUNT_EMAIL_UNIQUE = True
 ACCOUNT_EMAIL_CONFIRMATION_REQUIRED = True
@@ -33,7 +33,7 @@ ACCOUNT_SETTINGS_REDIRECT_URL = 'account:account_settings'
 #ACCOUNT_PASSWORD_CHANGE_REDIRECT_URL = "blog/templates/registration:password_reset_confirm"
 ACCOUNT_PASSWORD_CHANGE_REDIRECT_URL = "account:account_password"
 
-SECRET_KEY = os.environ.get('SECRET_KEY')
+SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
