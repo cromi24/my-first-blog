@@ -27,10 +27,10 @@ LOGOUT_REDIRECT_URL = '/'
 ACCOUNT_LOGIN_URL = 'account:login'
 ACCOUNT_EMAIL_CONFIRMATION_ANONYMOUS_REDIRECT_URL = ACCOUNT_LOGIN_URL
 ACCOUNT_PASSWORD_RESET_REDIRECT_URL = ACCOUNT_LOGIN_URL
-ACCOUNT_EMAIL_CONFIRMATION_URL = "account:account_confirm_email"
+#ACCOUNT_EMAIL_CONFIRMATION_URL = "account:account_confirm_email"
 ACCOUNT_SETTINGS_REDIRECT_URL = 'account:account_settings'
-ACCOUNT_PASSWORD_CHANGE_REDIRECT_URL = "blog/templates/registration:password_reset_confirm"
-#ACCOUNT_PASSWORD_CHANGE_REDIRECT_URL = "account:account_password"
+#ACCOUNT_PASSWORD_CHANGE_REDIRECT_URL = "blog/templates/registration:password_reset_confirm"
+ACCOUNT_PASSWORD_CHANGE_REDIRECT_URL = "account:account_password"
 
 SECRET_KEY = os.getenv('SECRET_KEY')
 
@@ -49,10 +49,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'rest_framework',
-    'blog',
     'accounts.apps.AccountsConfig',
     'django.contrib.sites',
+    'rest_framework',
+    'blog',
     'account',
 ]
 
