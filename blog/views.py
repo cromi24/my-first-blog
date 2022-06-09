@@ -21,7 +21,7 @@ from django.shortcuts import render
 from django.views.generic import UpdateView
 from .forms import SignUpForm, ProfileForm
 from django.core.exceptions import ObjectDoesNotExist
-
+from django.core.mail import send_mail
 
 class ProfileView(UpdateView):
     model = User
@@ -75,8 +75,14 @@ class SignUpView(View):
                 'uid': urlsafe_base64_encode(force_bytes(user.pk)),
                 'token': account_activation_token.make_token(user),
             })
-            user.email_user(subject, message)
-
+            #user.email_user(subject, message)
+            send_mail(
+                subject,
+                message,
+                'cromi24@yandex.ru',
+                [user.email],
+                fail_silently=False,
+            )
             messages.success(request, ('Please Confirm your email to complete registration.'))
 
             return redirect('login')
