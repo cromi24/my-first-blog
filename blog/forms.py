@@ -21,19 +21,22 @@ class PostForm(forms.ModelForm):
 
 # Sign Up Form
 class SignUpForm(UserCreationForm):
-    def clean(self):
-        email = self.cleaned_data.get('email')
-        if User.objects.filter(email=email).exists():
-            raise ValidationError("Такой Email уже используется другим пользователем!")
-        return self.cleaned_data
+   def clean(self):
+       username = self.cleaned_data.get('username')
+       email = self.cleaned_data.get('email')
+       if User.objects.filter(email=email).exists():
+           raise ValidationError("Такой Email уже используется другим пользователем!")
+       if User.objects.filter(username=username).exists():
+           raise ValidationError("Это имя уже занято!")
+       return self.cleaned_data
 
-    email = forms.EmailField(max_length=254, required=True, help_text='Введите действующий email')
+   #email = forms.EmailField(max_length=254, required=True, help_text='Введите действующий email')
 
-    class Meta:
-        model = User
-        fields = [
-            'username',
-            'email',
-            'password1',
-            'password2',
+   class Meta:
+       model = User
+       fields = [
+           'username',
+           'email',
+           'password1',
+           'password2',
             ]
