@@ -7,6 +7,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 load_dotenv()
 
+
 DEFAULT_FROM_EMAIL = 'cromi24@yandex.ru'
 EMAIL_HOST = "smtp.yandex.ru"
 EMAIL_HOST_USER = DEFAULT_FROM_EMAIL

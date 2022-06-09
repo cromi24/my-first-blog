@@ -2,6 +2,7 @@ from django import forms
 from .models import Post
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
+from django.core.exceptions import ValidationError
 
 class ProfileForm(forms.ModelForm):
 
@@ -20,6 +21,12 @@ class PostForm(forms.ModelForm):
 
 # Sign Up Form
 class SignUpForm(UserCreationForm):
+    def clean(self):
+        email = self.cleaned_data.get('email')
+        if User.objects.filter(email=email).exists():
+            raise ValidationError("Такой Email уже используется другим пользователем!")
+        return self.cleaned_data
+
     email = forms.EmailField(max_length=254, required=True, help_text='Введите действующий email')
 
     class Meta:

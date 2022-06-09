@@ -1,6 +1,6 @@
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import get_object_or_404
 from django.utils import timezone
 from .models import Post
 from .forms import PostForm
@@ -8,29 +8,27 @@ from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.views.generic import View
 from django.contrib.auth.models import User
-
 from django.contrib import messages
 from django.contrib.sites.shortcuts import get_current_site
 from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode
 from django.template.loader import render_to_string
 from .tokens import account_activation_token
-
 from django.contrib.auth import login
 from django.utils.encoding import force_text
 from django.utils.http import urlsafe_base64_decode
-
 from django.shortcuts import render
-from django.views.generic import CreateView, UpdateView
+from django.views.generic import UpdateView
 from .forms import SignUpForm, ProfileForm
 from django.core.exceptions import ObjectDoesNotExist
 
-# Edit Profile View
+
 class ProfileView(UpdateView):
     model = User
     form_class = ProfileForm
     success_url = reverse_lazy('post_list')
     template_name = 'blog/profile.html'
+
 
 class ActivateAccount(View):
 
@@ -52,7 +50,7 @@ class ActivateAccount(View):
             messages.warning(request, ('The confirmation link was invalid, possibly because it has already been used.'))
             return redirect('post_list')
 
-# Sign Up View
+
 class SignUpView(View):
     form_class = SignUpForm
     template_name = 'registration/signup.html'
@@ -85,16 +83,19 @@ class SignUpView(View):
 
         return render(request, self.template_name, {'form': form})
 
+
 def post_list(request):
     posts=Post.objects.filter(published_date__lte=timezone.now()).order_by('published_date')
     return render(request, 'blog/post_list.html', {'posts':posts})
+
 
 @login_required
 def post_detail(request, pk):
     post=get_object_or_404(Post, pk=pk)
     return render(request, 'blog/post_detail.html', {'post': post})
 
-@login_required
+
+@staff_member_required
 def post_new(request):
     if request.method == "POST":
         form = PostForm(request.POST)
@@ -108,7 +109,8 @@ def post_new(request):
         form = PostForm()
     return render(request, 'blog/post_edit.html', {'form': form})
 
-@login_required
+
+@staff_member_required
 def post_edit(request, pk):
     post = get_object_or_404(Post, pk=pk)
     if request.method == "POST":
