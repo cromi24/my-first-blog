@@ -75,14 +75,14 @@ class SignUpView(View):
                 'uid': urlsafe_base64_encode(force_bytes(user.pk)),
                 'token': account_activation_token.make_token(user),
             })
-            #user.email_user(subject, message)
-            send_mail(
+            user.email_user(subject, message)
+            '''send_mail(
                 subject,
                 message,
-                'cromi24@yandex.ru',
+                'fdeksblog@gmail.com',
                 [user.email],
                 fail_silently=False,
-            )
+            )'''
             messages.success(request, ('Please Confirm your email to complete registration.'))
 
             return redirect('login')

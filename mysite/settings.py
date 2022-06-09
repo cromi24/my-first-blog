@@ -8,14 +8,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 load_dotenv()
 
 
-DEFAULT_FROM_EMAIL = 'cromi24@yandex.ru'
-EMAIL_HOST = "smtp.yandex.ru"
+DEFAULT_FROM_EMAIL = 'fdeksblog@gmail.com'
+EMAIL_HOST = "smtp.gmail.com"
 EMAIL_HOST_USER = DEFAULT_FROM_EMAIL
 EMAIL_HOST_PASSWORD = os.getenv('emailPass')
 smtpAuthentication="Basic"
-EMAIL_PORT = 465
-EMAIL_USE_TLS = False
-EMAIL_USE_SSL = True
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_USE_SSL = False
 
 SITE_ID = int(os.getenv('site_ID'))
 
