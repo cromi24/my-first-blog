@@ -19,7 +19,7 @@ class PostForm(forms.ModelForm):
         model = Post
         fields = ('title', 'text',)
 
-# Sign Up Form
+
 class SignUpForm(UserCreationForm):
    def clean(self):
        username = self.cleaned_data.get('username')
@@ -29,8 +29,6 @@ class SignUpForm(UserCreationForm):
        if User.objects.filter(username=username).exists():
            raise ValidationError("Это имя уже занято!")
        return self.cleaned_data
-
-   #email = forms.EmailField(max_length=254, required=True, help_text='Введите действующий email')
 
    class Meta:
        model = User

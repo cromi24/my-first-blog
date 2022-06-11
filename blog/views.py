@@ -2,7 +2,7 @@ from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404
 from django.utils import timezone
-from .models import Post
+from .models import Post, Ip, get_client_ip
 from .forms import PostForm
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
@@ -21,7 +21,7 @@ from django.shortcuts import render
 from django.views.generic import UpdateView
 from .forms import SignUpForm, ProfileForm
 from django.core.exceptions import ObjectDoesNotExist
-from django.core.mail import send_mail
+
 
 class ProfileView(UpdateView):
     model = User
@@ -76,28 +76,37 @@ class SignUpView(View):
                 'token': account_activation_token.make_token(user),
             })
             user.email_user(subject, message)
-            '''send_mail(
-                subject,
-                message,
-                'fdeksblog@gmail.com',
-                [user.email],
-                fail_silently=False,
-            )'''
             messages.success(request, ('Please Confirm your email to complete registration.'))
 
             return redirect('login')
 
         return render(request, self.template_name, {'form': form})
 
+def home_view(request):
+    posts = Post.objects.all()
+
+    context = {
+        'posts' : posts,
+    }
+    return render(request, 'blog/base.html', context)
 
 def post_list(request):
     posts=Post.objects.filter(published_date__lte=timezone.now()).order_by('published_date')
+
     return render(request, 'blog/post_list.html', {'posts':posts})
 
 
 @login_required
 def post_detail(request, pk):
     post=get_object_or_404(Post, pk=pk)
+
+    ip = get_client_ip(request)
+    if Ip.objects.filter(ip=ip).exists():
+        post.views.add(Ip.objects.get(ip=ip))
+    else:
+        Ip.objects.create(ip=ip)
+        post.views.add(Ip.objects.get(ip=ip))
+
     return render(request, 'blog/post_detail.html', {'post': post})
 
 
