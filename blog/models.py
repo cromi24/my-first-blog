@@ -2,15 +2,10 @@ from django.conf import settings
 from django.utils import timezone
 from django.db import models
 from django.contrib.auth.models import User
+from django.contrib import admin
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
-
-class Ip(models.Model): #таблица где будут ip для счетчика
-    ip = models.CharField(max_length=45)
-
-    def __str__(self):
-        return self.ip
 
 def get_client_ip(self):
     x_forwarded_for = self.META.get('HTTP_X_FORWARDED_FOR')
@@ -26,10 +21,7 @@ class Post(models.Model):
     text = models.TextField()
     created_date = models.DateTimeField(default=timezone.now)
     published_date = models.DateTimeField(blank=True, null=True)
-    views = models.ManyToManyField(Ip, related_name="post_views", blank=True)
-
-    def views_counter(self):
-        return self.views.count()
+    views= models.PositiveIntegerField(default=0)
 
     @property
     def url(self):
@@ -41,6 +33,21 @@ class Post(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class PostViews(models.Model):
+
+    post = models.ForeignKey(Post, on_delete = models.CASCADE)
+    date = models.DateField('Дата', default=timezone.now)
+    datedViews = models.IntegerField('Просмотры', default=0)
+
+    def  __str__(self):
+        return self.post.title
+
+
+class PostViewsAdmin(admin.ModelAdmin):
+    list_display = ('__str__', 'date', 'datedViews')
+    search_fields = ('__str__', )
 
 
 class Profile(models.Model):
