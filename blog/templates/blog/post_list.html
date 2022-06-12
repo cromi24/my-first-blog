@@ -5,7 +5,7 @@
      <div class="post">
             <div class="date">
                 Опубликовано: {{ post.published_date }}
-                Просмотры: {{post.views_counter}}
+                Просмотры: {{ post.views }}
             </div>
             <h1><a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a></h1>
             <p>{{ post.text|linebreaksbr }}</p>

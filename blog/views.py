@@ -2,7 +2,7 @@ from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404
 from django.utils import timezone
-from .models import Post, Ip, get_client_ip
+from .models import Post, PostViews
 from .forms import PostForm
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
@@ -82,14 +82,6 @@ class SignUpView(View):
 
         return render(request, self.template_name, {'form': form})
 
-def home_view(request):
-    posts = Post.objects.all()
-
-    context = {
-        'posts' : posts,
-    }
-    return render(request, 'blog/base.html', context)
-
 def post_list(request):
     posts=Post.objects.filter(published_date__lte=timezone.now()).order_by('published_date')
 
@@ -100,14 +92,20 @@ def post_list(request):
 def post_detail(request, pk):
     post=get_object_or_404(Post, pk=pk)
 
-    ip = get_client_ip(request)
-    if Ip.objects.filter(ip=ip).exists():
-        post.views.add(Ip.objects.get(ip=ip))
-    else:
-        Ip.objects.create(ip=ip)
-        post.views.add(Ip.objects.get(ip=ip))
+    obj, created = PostViews.objects.get_or_create(
+        defaults={
+            "post": post,
+            "date": timezone.now()
+        },
 
-    return render(request, 'blog/post_detail.html', {'post': post})
+        date=timezone.now(), post=post
+    )
+    obj.datedViews += 1
+    obj.save(update_fields=['datedViews'])
+    post.views += 1
+    post.save(update_fields=['views'])
+
+    return render(request, 'blog/post_detail.html', {"post":post})
 
 
 @staff_member_required
