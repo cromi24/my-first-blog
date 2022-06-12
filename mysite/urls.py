@@ -18,6 +18,7 @@ from django.contrib.auth.models import User
 from django.urls import path, include
 from rest_framework import routers, serializers, viewsets, permissions
 
+
 # Serializers define the API representation.
 class UserSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
@@ -30,6 +31,8 @@ class UserViewSet(viewsets.ModelViewSet):
     serializer_class = UserSerializer
     permission_classes = [permissions.IsAuthenticated]
 
+
+
 # Routers provide an easy way of automatically determining the URL conf.
 router = routers.DefaultRouter()
 router.register(r'users', UserViewSet)
@@ -41,6 +44,6 @@ urlpatterns = [
     path('rest-api/', include(router.urls)),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     path('accounts/', include('django.contrib.auth.urls')),
-    path('accounts/', include('accounts.urls')),
-    path('example-api/', include('api.urls'))
+    #path('accounts/', include('accounts.urls')),
+    path('example-api/', include('api.urls')),
 ]

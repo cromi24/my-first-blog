@@ -4,7 +4,8 @@
     <div class="post">
         {% if post.published_date %}
             <div class="date">
-                {{ post.published_date }}
+                Опубликовано: {{ post.published_date }}
+                Просмотры: {{ post.views }}
             </div>
         {% endif %}
         {% if user.is_staff %}

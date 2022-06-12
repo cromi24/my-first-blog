@@ -1,22 +1,41 @@
 import os
 from pathlib import Path
+from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+load_dotenv()
+
+
+DEFAULT_FROM_EMAIL = 'fdeksblog@gmail.com'
+EMAIL_HOST = "smtp.gmail.com"
+EMAIL_HOST_USER = DEFAULT_FROM_EMAIL
+EMAIL_HOST_PASSWORD = os.getenv('emailPass')
+smtpAuthentication="Basic"
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_USE_SSL = False
+
+SITE_ID = int(os.getenv('site_ID'))
+
+ACCOUNT_EMAIL_CONFIRMATION_REQUIRED = True
+
+
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
+ACCOUNT_LOGIN_URL = 'account:login'
+ACCOUNT_EMAIL_CONFIRMATION_ANONYMOUS_REDIRECT_URL = ACCOUNT_LOGIN_URL
+ACCOUNT_PASSWORD_RESET_REDIRECT_URL = ACCOUNT_LOGIN_URL
+ACCOUNT_SETTINGS_REDIRECT_URL = 'account:account_settings'
+ACCOUNT_PASSWORD_CHANGE_REDIRECT_URL = "account:account_password"
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-ges40rq5i$^#i0(9n7oh53vfly)1u*6-p52#b78%imb9v80*p5'
+SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', '.pythonanywhere.com']
+ALLOWED_HOSTS = ['127.0.0.1', 'cromi24.pythonanywhere.com']
 
 
 # Application definition
@@ -28,9 +47,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'accounts.apps.AccountsConfig',
+    'django.contrib.sites',
     'rest_framework',
     'blog',
-    'accounts.apps.AccountsConfig'
+    'account',
 ]
 
 MIDDLEWARE = [
@@ -41,6 +62,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'account.middleware.LocaleMiddleware',
+    'account.middleware.TimezoneMiddleware',
 ]
 
 ROOT_URLCONF = 'mysite.urls'
@@ -56,6 +79,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'account.context_processors.account',
             ],
         },
     },
@@ -129,5 +153,4 @@ REST_FRAMEWORK = {
     'PAGE_SIZE': 10
 }
 
-########DELETE IN PRODUCTION
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
