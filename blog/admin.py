@@ -1,11 +1,10 @@
 from django.contrib import admin
-from .models import Post
 from django.contrib.sites.models import Site
-from .models import Post, Ip
+from .models import Post, PostViews, PostViewsAdmin
 
 
 admin.site.register(Post)
-admin.site.register(Ip)
+admin.site.register(PostViews,PostViewsAdmin)
 
 admin.site.unregister(Site)
 class SiteAdmin(admin.ModelAdmin):

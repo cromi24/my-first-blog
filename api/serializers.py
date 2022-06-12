@@ -8,3 +8,9 @@ class PostSerializerDetail(serializers.HyperlinkedModelSerializer):
 
         fields = ['pk', 'url', 'title', 'published_date']
 
+class PopularPostSerializer(serializers.HyperlinkedModelSerializer):
+
+    class Meta:
+        model = Post
+
+        fields = ['pk', 'url', 'title', 'published_date', 'views']

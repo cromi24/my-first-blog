@@ -5,7 +5,7 @@
      <div class="post">
             <div class="date">
                 Опубликовано: {{ post.published_date }}
-                Просмотры: {{post.views_counter}}
+                Просмотры: {{ post.views }}
             </div>
             <h1><a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a></h1>
             <p>{{ post.text|linebreaksbr }}</p>
@@ -23,7 +23,7 @@
       fetch('/example-api/posts/?type=random')
         .then(response => response.json())
         .then(response => {
-          console.log('response')
+          console.log('random')
           console.log(response)
 
           let body = '<ul>'
@@ -39,6 +39,36 @@
           body += '</ul>'
 
           document.getElementById('random-posts').innerHTML = body
+
+        })
+    </script>
+    <div class="popular-posts">
+      <div class="popular-posts__title">
+        Самый популярный пост недели:
+      </div>
+      <div id="popular-posts" class="popular-posts__c"></div>
+    </div>
+    <script>
+      fetch('/example-api/posts/?type=popular')
+        .then(response => response.json())
+        .then(response => {
+          console.log('popular')
+          console.log(response)
+
+          let body = '<ul>'
+
+          response.data.forEach((pop) => {
+            body += `
+              <li>
+                <a href='${pop.url}'>${pop.title}</a>
+                <p>Просмотров: ${pop.datedViews}</p>
+              </li>
+            `
+          })
+
+          body += '</ul>'
+
+          document.getElementById('popular-posts').innerHTML = body
 
         })
     </script>

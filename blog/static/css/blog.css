@@ -50,10 +50,10 @@ h1, h2, h3, h4 {
     color: #000000;
 }
 
-.random-posts {
+.random-posts, popular-post {
   margin: 20px 0px;
 }
-.random-posts__title {
+.random-posts__title, popular-post__title{
   font-size: 22px;
   font-weight: 600;
   margin-bottom: 10px;
