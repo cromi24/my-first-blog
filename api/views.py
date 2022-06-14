@@ -3,7 +3,6 @@ from rest_framework import permissions
 from rest_framework import renderers
 from rest_framework.response import Response
 from .serializers import PostSerializerDetail, PopularPostSerializer
-from django.db.models import Sum
 
 from blog.models import *
 
@@ -40,26 +39,27 @@ class PostsViewSet(viewsets.ModelViewSet):
 
 class PopularPostViewSet(viewsets.ModelViewSet):
 
-    popularSet = PostViews.objects.all()
+    queryset = Post.objects.all()
+    views = PostViews.objects.get_queryset().order_by('id')
     serializer_class = PopularPostSerializer
     permission_classes = [permissions.AllowAny]
     renderer_classes = [renderers.JSONRenderer]
 
-    def popular(self, request):
-        popularSet = self.popularSet
+    def list(self, request):
+        queryset = self.queryset
+        views = self.views
         type = request.query_params.get('type', None)
-        print('type: ', type)
+        print('type2: ', type)
 
-        if type == 'popular':
-            popularSet = popularSet.filter(
+        popularset = views.filter(
             date__range=[timezone.now() - timezone.timedelta(7), timezone.now()]
-                ).values('post_id', 'post_title', 'post_datedViews',
-                ).annotate(datedViews=Sum('post_datedViews')
-                ).order_by('-post_datedViews')
-            popular = popularSet[:1]
-            serializer = PopularPostSerializer(popular)
-        else: return
-
+            ).values('post_id',
+            ).annotate(datedViews=Sum('datedViews')
+            ).order_by('-datedViews')
+        popular_id = popularset[0].get('post_id')
+        queryset = queryset.filter(id=popular_id)
+        queryset.views = popularset[0].get('datedViews')
+        serializer = PopularPostSerializer(queryset, many=True)
         return Response({
             'data': serializer.data,
         })

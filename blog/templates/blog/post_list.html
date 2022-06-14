@@ -42,14 +42,14 @@
 
         })
     </script>
-    <div class="popular-posts">
-      <div class="popular-posts__title">
+    <div class="popular-post">
+      <div class="popular-post__title">
         Самый популярный пост недели:
       </div>
-      <div id="popular-posts" class="popular-posts__c"></div>
+      <div id="popular-post" class="popular-post__c"></div>
     </div>
     <script>
-      fetch('/example-api/posts/?type=popular')
+      fetch('/example-api/post/?type=popular')
         .then(response => response.json())
         .then(response => {
           console.log('popular')
@@ -57,18 +57,18 @@
 
           let body = '<ul>'
 
-          response.data.forEach((pop) => {
+          response.data.forEach((el) => {
             body += `
               <li>
-                <a href='${pop.url}'>${pop.title}</a>
-                <p>Просмотров: ${pop.datedViews}</p>
+                <a href='${el.url}'>${el.title}</a>
+                <p>Просмотров: ${el.views}</p>
               </li>
             `
           })
 
           body += '</ul>'
 
-          document.getElementById('popular-posts').innerHTML = body
+          document.getElementById('popular-post').innerHTML = body
 
         })
     </script>

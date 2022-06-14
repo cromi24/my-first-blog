@@ -12,5 +12,4 @@ class PopularPostSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Post
-
         fields = ['pk', 'url', 'title', 'published_date', 'views']

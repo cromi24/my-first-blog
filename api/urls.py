@@ -6,7 +6,7 @@ router = routers.DefaultRouter()
 router.register(r'posts', PostsViewSet)
 
 popularRouter = routers.DefaultRouter()
-popularRouter.register(r'post', PopularPostViewSet, basename='popularSet')
+popularRouter.register(r'post', PopularPostViewSet)
 
 
 urlpatterns = [

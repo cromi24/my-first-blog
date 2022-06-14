@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 from django.contrib import admin
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from django.db.models import Sum
 
 
 def get_client_ip(self):
@@ -21,7 +22,7 @@ class Post(models.Model):
     text = models.TextField()
     created_date = models.DateTimeField(default=timezone.now)
     published_date = models.DateTimeField(blank=True, null=True)
-    views= models.PositiveIntegerField(default=0)
+    views = models.PositiveIntegerField(default=0)
 
     @property
     def url(self):
