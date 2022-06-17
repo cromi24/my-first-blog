@@ -19,17 +19,6 @@ EMAIL_USE_SSL = False
 
 SITE_ID = int(os.getenv('site_ID'))
 
-ACCOUNT_EMAIL_CONFIRMATION_REQUIRED = True
-
-
-LOGIN_REDIRECT_URL = '/'
-LOGOUT_REDIRECT_URL = '/'
-ACCOUNT_LOGIN_URL = 'account:login'
-ACCOUNT_EMAIL_CONFIRMATION_ANONYMOUS_REDIRECT_URL = ACCOUNT_LOGIN_URL
-ACCOUNT_PASSWORD_RESET_REDIRECT_URL = ACCOUNT_LOGIN_URL
-ACCOUNT_SETTINGS_REDIRECT_URL = 'account:account_settings'
-ACCOUNT_PASSWORD_CHANGE_REDIRECT_URL = "account:account_password"
-
 SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
@@ -51,7 +40,6 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'rest_framework',
     'blog',
-    'account',
 ]
 
 MIDDLEWARE = [
@@ -62,8 +50,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'account.middleware.LocaleMiddleware',
-    'account.middleware.TimezoneMiddleware',
 ]
 
 ROOT_URLCONF = 'mysite.urls'
@@ -79,7 +65,6 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'account.context_processors.account',
             ],
         },
     },
